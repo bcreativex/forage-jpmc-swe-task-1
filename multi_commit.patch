@@ -1,0 +1,104 @@
+From e2336d92a106758df5cb55949dc7bb7287807ba9 Mon Sep 17 00:00:00 2001
+From: krishna <krishnajatav504@gmail.com>
+Date: Thu, 25 Apr 2024 01:58:48 +0530
+Subject: [PATCH 1/2] changes made
+
+changes made
+---
+ __pycache__/client3.cpython-311.pyc | Bin 0 -> 1775 bytes
+ client3.py                          |   8 ++++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+ create mode 100644 __pycache__/client3.cpython-311.pyc
+
+diff --git a/__pycache__/client3.cpython-311.pyc b/__pycache__/client3.cpython-311.pyc
+new file mode 100644
+index 0000000000000000000000000000000000000000..0a1359603be54db4d7a28f9369a03102970f9c13
+GIT binary patch
+literal 1775
+zcmaJBO=#Oz_{o-JIkuBHjlHGu;cbvD&f+9aC`(Pc9Tso&5|XwnjmT<b={b=jTdpLx
+ztLK0ZJ9v<T2Zb88L0}`x=q2pZ9y91|7dseg1cSiXp*KTz%4y$|<NOrX_w&8)d++=I
+zKIzv$pbx?L=g;xXq8FjRDbX8&Q{;G`LFg$`kiuw4?4FFsIJ8T2D=v{$+#;v2-y)G$
+zIDj4^DEy|2${WvJh<IW55pEasJcHdGm#Ibc)i0tC_)ym0;~?&A&j+;A-@Cnd5_V_c
+zBHhD550gE&1lP}cPw2AU%hb-`8QTS9_bu{b(2GbAyq^$<z$#CME^Az45fZP6!(vDb
+z!}~jmhg|uAQ3Ns!&`Ux9`$!m|?<enNNd|3y<Vg4ddPtarcOj$CoUBskN<4Za7LfQ^
+zVQxd6Zlh@6HDy{Vy|-amg~ar<rpuDHp_^7>erA4V`azKxk3UtF8{cfH|3aqZvuuGB
+z_>A1Jk81#)A}=a~&Jn=7V~epaaKoGH{7rG6<Co*va=jtNo^!rM%3XGCv1O+0D!a>U
+zhK0zu(#Lq&(3PT0u%v0&+8{Vjh(Z+nP|}LT#FmcNNuC&z1sqtBEUBQYc?;W|Y3cH&
+z?XmPiDy=FuS1?qWbZN=lj50Qt(R9g*ayIv%s9VIKsj$7ko9eQ9fvt-gkbh)y05BaV
+z*GXb6EgM9#)Q9A2J(E#oRZ=BwEu$OKI*DZqIXPxNA~6e8#NunRrjoohH&u9S``3xJ
+z2wpBzFAduBnCe~zP(erRLfap#eYm|;N&Yn$s*(E5R``RRN3HO5b8x0LI8(X#Ki6%4
+zsFG~^25Zs!>K@nd#Tsnv7<3}}tcif2rF4od078rHw2!OwKK_DO7;>oUSkGW5{FH>H
+zymE@C@oOsk8;ZJY&*^gyNt@IJ#s>YEZ2{uDMHLytKu*9m>2IeSo6ld38}#e8g;Xjh
+zsrgi@<XNG~S8&OTB@2&3`V%F75<}t=C1J8_KXJlDOM;^okD1YTZ8mG_d7C%DLp^8r
+z7Y$8Q(^Ce4RyQr1@6tB6@@4YYs?97pd3GG4hVxR6q*6AkLd|UsbgUDbN!c89gJRmA
+zo)!;i(F+93Kvi>+WwTIl#pa!6F%9^IBBx~x8lT~#fVPR#Xi(Z9y`Zr=c{vdla?r*a
+z`NSB9JDN=M4#19^VVKSYV*C{!ooy7TIJ1pHjo#|;$U9l#;NXM`)8ReLR0o}bVK)=#
+zpfk{qSbw#2=pJdfM~(u)>YdtHZLH3GKmKI=yZhVsJ4oQ>98hK2!O`0AldJX5e_VPM
+znLUim?q7Sp@cY6+;DCP__+#MZKyz-nHMiW1th6F4uOfF3BX^sTd#%X5W^lC?T&?m)
+z!e{N!Xa~8x3e$zvWIKLiKk|Y!<BP5MV$(lWP1dg0)x8ijb~RZ|z9`appwih`5l`2e
+z)ab6Ebki@l{BpxtM?#>=RkQW^`ut9E?^<&--WrWJ`{PYvwk6CqoYe^-_A12MVS9l&
+GS^p1x7r15s
+
+literal 0
+HcmV?d00001
+
+diff --git a/client3.py b/client3.py
+index 3fc09b7..7958aa0 100644
+--- a/client3.py
++++ b/client3.py
+@@ -35,14 +35,16 @@ def getDataPoint(quote):
+     stock = quote['stock']
+     bid_price = float(quote['top_bid']['price'])
+     ask_price = float(quote['top_ask']['price'])
+-    price = bid_price
++    price = (bid_price + ask_price)/2
+     return stock, bid_price, ask_price, price
+ 
+ 
+ def getRatio(price_a, price_b):
+     """ Get ratio of price_a and price_b """
+     """ ------------- Update this function ------------- """
+-    return 1
++    if (price_b == 0) :
++        return
++    return price_a/price_b
+ 
+ 
+ # Main
+@@ -52,8 +54,10 @@ if __name__ == "__main__":
+         quotes = json.loads(urllib.request.urlopen(QUERY.format(random.random())).read())
+ 
+         """ ----------- Update to get the ratio --------------- """
++        prices = {}
+         for quote in quotes:
+             stock, bid_price, ask_price, price = getDataPoint(quote)
++            prices[stock]= price
+             print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
+ 
+         print("Ratio %s" % getRatio(price, price))
+-- 
+2.44.0.windows.1
+
+
+From 67079b004e4be4ffef7c42af00d72aee95f4b3dc Mon Sep 17 00:00:00 2001
+From: krishna <krishnajatav504@gmail.com>
+Date: Thu, 25 Apr 2024 03:15:29 +0530
+Subject: [PATCH 2/2] Update client3.py
+
+---
+ client3.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/client3.py b/client3.py
+index 7958aa0..c3021a8 100644
+--- a/client3.py
++++ b/client3.py
+@@ -60,4 +60,4 @@ if __name__ == "__main__":
+             prices[stock]= price
+             print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
+ 
+-        print("Ratio %s" % getRatio(price, price))
++        print("Ratio %s" % getRatio(prices["ABC"], prices["DEF"]))
+-- 
+2.44.0.windows.1
+
